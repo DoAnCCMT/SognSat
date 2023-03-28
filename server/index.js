@@ -7,6 +7,14 @@ const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 const morgan = require("morgan");
 
+//import routes
+const tacgiaRoute = require("./routes/TacGia");
+const truyenRoute = require("./routes/Truyen");
+const taikhoanRoute = require("./routes/TaiKhoan");
+const chapterRoute = require("./routes/Chapter");
+const binhluanRoute = require("./routes/BinhLuan");
+const theloaiRoute = require("./routes/TheLoai");
+
 //Sử dụng để tạo file .env - sử dụng để tạo file chứa các thông tin cần bảo mật
 dotenv.config();
 //bodyParser phân tích dữ liệu và đưa vào document => lấy data form từ req.body
@@ -37,6 +45,14 @@ mongoose
     console.log("Cannot connect to the database!", err);
     process.exit();
   });
+
+//Routes
+app.use("/TacGia", tacgiaRoute);
+app.use("/TheLoai", theloaiRoute);
+app.use("/Truyen", truyenRoute);
+app.use("/TaiKhoan", taikhoanRoute);
+app.use("/Chapter", chapterRoute);
+app.use("/BinhLuan", binhluanRoute);
 
 app.get("/api", (req, res) => {
   res.status(200).send("test server");

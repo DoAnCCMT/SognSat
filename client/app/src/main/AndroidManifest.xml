@@ -15,18 +15,42 @@
         android:theme="@style/Theme.MangaApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".MainScreen"
+            android:exported="false" />
+        <activity
+            android:name=".BinhLuan"
+            android:exported="false" />
+        <activity
+            android:name=".Chapter"
+            android:exported="false" />
+        <activity
+            android:name=".Truyen"
+            android:exported="false" />
+        <activity
+            android:name=".TruyenTranhAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".MainMenu"
+            android:exported="false" />
+        <activity
+            android:name=".main"
+            android:exported="false" />
+        <activity
+            android:name=".ThongTinLienHe"
+            android:exported="false" />
+        <activity
+            android:name=".function.SignUp"
+            android:exported="false" />
         <activity
             android:name=".function.SignIn"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

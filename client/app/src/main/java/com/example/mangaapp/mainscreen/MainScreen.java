@@ -12,8 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.mangaapp.R;
+import com.example.mangaapp.adapter.TruyenTranhAdapter;
+import com.example.mangaapp.api.ApiService;
+import com.example.mangaapp.display.Favorite;
+import com.example.mangaapp.display.ThongTinTaiKhoan;
+import com.example.mangaapp.function.GetAllTheLoai;
+import com.example.mangaapp.function.SearchTruyen;
 import com.example.mangaapp.function.SignIn;
+import com.example.mangaapp.model.Truyen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -27,6 +35,8 @@ public class MainScreen extends AppCompatActivity {
     private static final String MY_PREFERENCE_NAME = "USER_ID";
     BottomNavigationView bottomNavigationView;
     RecyclerView rcvDSTruyenHot, rcvDSTruyenMoi;
+    TruyenTranhAdapter truyenTranhHotAdapter, truyenTranhMoiAdapter, truyenTranhAdapter;
+    List<Truyen> listTruyenMoi, listTruyenHot;
     ImageView imgSearch, imgPhanLoai, imgAnhBia;
     String id;
 
@@ -34,7 +44,7 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFullScreen();
-        setContentView(R.layout.activity_main_screen);
+        setContentView(R.layout.main_screen);
         init();
         //GetTatCaTruyen();
         initGridView();
@@ -58,15 +68,24 @@ public class MainScreen extends AppCompatActivity {
                 case R.id.account:
                     if (id.equals("")) {
                         startActivity(new Intent(MainScreen.this, SignIn.class));
+                    } else {
+                        startActivity(new Intent(MainScreen.this, ThongTinTaiKhoan.class));
                     }
                     break;
                 case R.id.favorite:
                     if (id.equals("")) {
                         startActivity(new Intent(MainScreen.this, SignIn.class));
+                    } else {
+                        startActivity(new Intent(MainScreen.this, Favorite.class));
                     }
+                    break;
+                case R.id.rank:
+                    break;
             }
             return false;
         });
+        imgSearch.setOnClickListener(v -> startActivity(new Intent(MainScreen.this, SearchTruyen.class)));
+        imgPhanLoai.setOnClickListener(v -> startActivity(new Intent(MainScreen.this, GetAllTheLoai.class)));
     }
 
     //Khởi tạo
@@ -81,6 +100,8 @@ public class MainScreen extends AppCompatActivity {
     }
 
     private void initGridView() {
+        listTruyenHot = new ArrayList<>();
+        listTruyenMoi = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         rcvDSTruyenMoi.setLayoutManager(gridLayoutManager);
         rcvDSTruyenMoi.setNestedScrollingEnabled(false);
@@ -91,8 +112,12 @@ public class MainScreen extends AppCompatActivity {
         rcvDSTruyenHot.setFocusable(false);
     }
 
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (truyenTranhAdapter != null)
+            truyenTranhAdapter.release();
     }
 }

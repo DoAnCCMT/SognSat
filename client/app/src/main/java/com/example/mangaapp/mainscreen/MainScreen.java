@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mangaapp.R;
 import com.example.mangaapp.adapter.TruyenTranhAdapter;
 import com.example.mangaapp.api.ApiService;
+import com.example.mangaapp.display.BXH;
 import com.example.mangaapp.display.Favorite;
 import com.example.mangaapp.display.ThongTinTaiKhoan;
 import com.example.mangaapp.function.GetAllTheLoai;
@@ -47,6 +48,8 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.main_screen);
         init();
         //GetTatCaTruyen();
+        GetTruyenHot();
+        GetTruyenMoi();
         initGridView();
         initBottomNavigation();
         SharedPreferences sharedPreferences = getSharedPreferences(MY_PREFERENCE_NAME, MODE_PRIVATE);
@@ -80,12 +83,14 @@ public class MainScreen extends AppCompatActivity {
                     }
                     break;
                 case R.id.rank:
+                    startActivity(new Intent(MainScreen.this, BXH.class));
                     break;
             }
             return false;
         });
         imgSearch.setOnClickListener(v -> startActivity(new Intent(MainScreen.this, SearchTruyen.class)));
         imgPhanLoai.setOnClickListener(v -> startActivity(new Intent(MainScreen.this, GetAllTheLoai.class)));
+        imgAnhBia.setOnClickListener(v -> startActivity(new Intent(MainScreen.this, BXH.class)));
     }
 
     //Khởi tạo
@@ -112,7 +117,51 @@ public class MainScreen extends AppCompatActivity {
         rcvDSTruyenHot.setFocusable(false);
     }
 
+    private void GetTruyenHot() {
+        ApiService.apiService.GetTruyenHot().enqueue(new Callback<List<Truyen>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Truyen>> call, @NonNull Response<List<Truyen>> response) {
+                listTruyenHot = response.body();
+                List<Truyen> list = new ArrayList<>();
+                if (listTruyenHot != null) {
+                    for (int i = 0; i < listTruyenHot.size(); i++) {
+                        if (listTruyenHot.get(i).isTrangThai()) {
+                            list.add(listTruyenHot.get(i));
+                        }
+                    }
+                    truyenTranhHotAdapter = new TruyenTranhAdapter(MainScreen.this, list);
+                    rcvDSTruyenHot.setAdapter(truyenTranhHotAdapter);
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<List<Truyen>> call, @NonNull Throwable t) {
+            }
+        });
+    }
+
+    private void GetTruyenMoi() {
+        ApiService.apiService.GetTruyenMoi().enqueue(new Callback<List<Truyen>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Truyen>> call, @NonNull Response<List<Truyen>> response) {
+                listTruyenMoi = response.body();
+                List<Truyen> list = new ArrayList<>();
+                if (listTruyenMoi != null) {
+                    for (int i = 0; i < listTruyenMoi.size(); i++) {
+                        if (listTruyenMoi.get(i).isTrangThai()) {
+                            list.add(listTruyenMoi.get(i));
+                        }
+                    }
+                    truyenTranhMoiAdapter = new TruyenTranhAdapter(MainScreen.this, list);
+                    rcvDSTruyenMoi.setAdapter(truyenTranhMoiAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Truyen>> call, @NonNull Throwable t) {
+            }
+        });
+    }
 
     @Override
     protected void onDestroy() {

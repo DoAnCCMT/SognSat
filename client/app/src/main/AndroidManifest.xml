@@ -16,10 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".BXHThang"
+            android:name=".display.BXH"
             android:exported="false" />
         <activity
-            android:name=".BXH"
+            android:name=".display.BXHThang"
             android:exported="false" />
         <activity
             android:name=".function.UpdatePassword"

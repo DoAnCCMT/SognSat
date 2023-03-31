@@ -3,6 +3,7 @@ package com.example.mangaapp.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mangaapp.R;
+import com.example.mangaapp.function.GetChapter;
+import com.example.mangaapp.function.SearchTruyen;
 import com.example.mangaapp.model.TacGia;
 
 import java.util.List;
@@ -43,7 +46,14 @@ public class TacGiaAdapter extends RecyclerView.Adapter<TacGiaAdapter.TacGiaView
             return;
         }
         holder.tvTenTacGia.setText(tacGia.getTenTacGia());
-
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SearchTruyen.class);
+                intent.putExtra("clickTenTacGia", tacGia.getTenTacGia());
+                context.startActivity(intent);
+            }
+        });
     }
 
 

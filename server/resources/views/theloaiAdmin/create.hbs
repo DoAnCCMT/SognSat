@@ -1,0 +1,27 @@
+<div class="mt-4">
+  <h3>Thêm Thể Loại</h3>
+
+  <form method="POST" action="/theloaiAdmin/store">
+    <div class="form-group">
+      <label for="TenTheLoai">Tên Thể Loại</label>
+      <input type="Text" name="TenTheLoai" class="form-control" id="tenTheLoai" aria-describedby="emailHelp"
+        placeholder="Nhập tên tác giả..." />
+    </div>
+    <button type="button" onclick="checked()" class="btn btn-primary">Thêm Thể Loại</button>
+  </form>
+</div>
+
+
+<script>
+  function checked() {
+    const form = document.forms[0];
+    const tenTheLoai = document.getElementById('tenTheLoai').value;
+    if (tenTheLoai == "") {
+      alert("Vui lòng nhập tên thể loại");
+      return;
+    } else {
+      form.submit();
+    }
+
+  }
+</script>

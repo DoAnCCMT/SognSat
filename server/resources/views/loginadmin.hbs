@@ -1,0 +1,22 @@
+{{#if message}}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{{/if}}
+
+<div class="mt-4">
+  <form method="GET" action="/loginadmin/login">
+    <div class="form-group">
+      <label for="TaiKhoan">Tên đăng nhập</label>
+      <input type="text" class="form-control" name="TaiKhoan" aria-describedby="emailHelp"
+        placeholder="Nhập username" />
+    </div>
+    <div class="form-group">
+      <label for="MatKhau">Password</label>
+      <input type="password" class="form-control" name="MatKhau" placeholder="Password" />
+    </div>
+    <button type="submit" id="btnDangNhap" class="btn btn-primary">Đăng Nhập</button>
+
+    <h4 style="color: red; text-align: center; visibility: hidden;" id="thongbao">Sai Tài Khoản Hoặc Mật Khẩu!!!</h4>
+  </form>
+</div>

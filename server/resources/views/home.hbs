@@ -1,0 +1,75 @@
+{{!-- <div class="mt-4">
+  <div class="row">
+    {{#each truyens}}
+    <div class="col-sm-6 col-lg-4">
+      <div class="card card-truyen-item">
+        <img class="card-img-top" style="height: 492px;" src="{{this.AnhBia}}" alt="{{this.TenTruyen}}" />
+        <div class="card-body">
+          <h5 class="card-title">
+            {{this.TenTruyen}}
+          </h5>
+          <p class="card-text" style="overflow: hidden;
+                text-overflow: ellipsis;
+                -webkit-line-clamp: 3;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;">
+            {{this.GioiThieu}}
+          </p>
+
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div> --}}
+
+<div class="mt-4">
+  <h1>Thống kê</h1>
+  <div class="row">
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card card-truyen-item">
+        <div class="card-body">
+          <h5 class="card-title">
+            Số lượng tác giả
+          </h5>
+          <h3>{{tacgia}}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card card-truyen-item">
+        <div class="card-body">
+          <h5 class="card-title">
+            Số lượng thể loại
+          </h5>
+          <h3>{{theloai}}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card card-truyen-item">
+        <div class="card-body">
+          <h5 class="card-title">
+            Số lượng truyện
+          </h5>
+          <h3>{{truyen}}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+      <div class="card card-truyen-item">
+        <div class="card-body">
+          <h5 class="card-title">
+            Số lượng tài khoản
+          </h5>
+          <h3>{{{taikhoan}}}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

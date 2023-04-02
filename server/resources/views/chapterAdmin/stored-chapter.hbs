@@ -1,0 +1,75 @@
+<div class="mt-4">
+  <h3>Danh Sách chapter của truyện {{tenTruyen}} </h3>
+  <a href="/chapterAdmin/create/{{truyenID}}">Thêm chapter</a>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên chapter</th>
+        <th scope="col">IDTruyện</th>
+        <th scope="col">Ngày Tạo</th>
+        <th scope="col">Lượt xem</th>
+        <th scope="col" colspan="3">Trạng thái</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each truyen}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{this.TenChapter}}</td>
+        <td>{{this.Truyen}}</td>
+        <td>{{this.NgayNhap}}</td>
+        <td>{{this.LuotXem}}</td>
+        <td>{{this.TrangThai}}</td>
+        <td>
+          <a href="/chapterAdmin/{{this._id}}/edit" class="btn btn-link">Sửa</a><br>
+          <a href="/binhluanAdmin/stored/{{this._id}}" class="btn btn-link">Bình Luận</a><br>
+          <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}"
+            data-target="#on-off-trangthai">Ẩn/Hiện</a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{! xac nhan ẩn hoặc hiện }}
+<div id="on-off-trangthai" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thay đổi trạng thái của chapter</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn thay đổi trạng thái của chapter này ? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnXacNhan" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="on-off-trangthai-form" method="POST">
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var chapterID;
+      var xacnhanForm = document.forms['on-off-trangthai-form'];
+      var btnXanNhan = document.getElementById('btnXacNhan')
+      $('#on-off-trangthai').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); chapterID = button.data('id');
+      });;
+      btnXanNhan.onclick = function () {
+        xacnhanForm.action = '/chapterAdmin/trangthai/' + chapterID + '?_method=PUT';
+        xacnhanForm.submit()
+      }
+    });
+
+  </script>

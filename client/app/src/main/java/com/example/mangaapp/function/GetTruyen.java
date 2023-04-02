@@ -203,7 +203,7 @@ public class GetTruyen extends AppCompatActivity {
             rcvChapter.setAdapter(chapterAdapter);
             //hiển thị thông tin truyện
             tvTenTruyen.setText(truyen.getTenTruyen());
-            if (truyen.isTrangThai()) {
+            if (truyen.isTinhTrang()) {
                 tvTinhTrang.setText("Tình trạng: Hoàn thành");
             } else {
                 tvTinhTrang.setText("Tình trạng: Đang tiến thành");
@@ -227,7 +227,7 @@ public class GetTruyen extends AppCompatActivity {
                 for (int i = 0; i < listChapter.size(); i++) {
                     sum = sum + listChapter.get(i).getLuotXem();
                 }
-                Truyen truyen2 = new Truyen(true, true, truyen1.getLuotThich(), sum, truyen1.getLuotXemThang(), truyen1.getNgayXepHang());
+                Truyen truyen2 = new Truyen(truyen1.isTrangThai(), truyen1.isTinhTrang(), truyen1.getLuotThich(), sum, truyen1.getLuotXemThang(), truyen1.getNgayXepHang());
                 ApiService.apiService.UpdateTruyen(truyen, truyen2).enqueue(new Callback<Truyen>() {
                     @Override
                     public void onResponse(Call<Truyen> call, Response<Truyen> response) {

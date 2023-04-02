@@ -1,0 +1,135 @@
+<style type='text/css'>
+  input[name=TacGias] {
+    pointer-events: none;
+  }
+
+  input[name=TheLoais] {
+    pointer-events: none;
+  }
+</style>
+<div class="mt-4">
+  <h3>Cập nhật truyện</h3>
+
+  <form class="mt-4" method="POST" action="/truyenAdmin/{{truyen._id}}?_method=PUT">
+    <div class="form-group">
+      <label for="TenTruyen">Tên Truyện</label>
+      <input type="Text" name="TenTruyen" class="form-control" id="tenTruyen" aria-describedby="emailHelp"
+        placeholder="Nhập tên tác giả..." value="{{truyen.TenTruyen}}" />
+    </div>
+    <div class='form-group'>
+      <label for='TheLoais'>
+        Thể loại
+      </label>
+      <input type='Text' name='TheLoais' class='form-control' id='theloais' aria-describedby='emailHelp'
+        placeholder='Nhập tên thể loại' value="{{truyen.TheLoais}}" />
+
+      {{! Hien thi tat ca the loai co trong db }}
+      <div class='mt-4'>
+        <div class='row'>
+          {{#each tenTheLoai}}
+          <div class='col-sm-6 col-lg-2'>
+            <input onclick='HienThiTheLoai()' type='checkbox' id='theloai' value="{{this}}" />{{this}}
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <label for='TacGias'>
+        Nhập tác giả
+      </label>
+      <input type='Text' name='TacGias' class='form-control' id='tacgias' aria-describedby='emailHelp'
+        placeholder='Nhập tên tác giả...' value="{{truyen.TacGias}}" />
+    </div>
+
+    {{! Hien thi tat ca tac gia co trong db }}
+    <div class='mt-4'>
+      <div class='row'>
+        {{#each tenTacGia}}
+        <div class='col-sm-6 col-lg-2'>
+          <input onclick='HienThiTacGia()' type='checkbox' id='tacgia' value="{{this}}" />{{this}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <br />
+    <div class="form-group">
+      <label for="GioiThieu">Nhập Giới Thiệu</label>
+      <textarea name="GioiThieu" class="form-control" id="gioiThieu" aria-describedby="emailHelp"
+        placeholder="Nhập giới thiệu của truyện...">{{truyen.GioiThieu}}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="AnhBia">Ảnh Bìa</label>
+      <input type="Text" name="AnhBia" class="form-control" id="anhBia" aria-describedby="emailHelp"
+        placeholder="Nhập link ảnh bìa..." value="{{truyen.AnhBia}}" />
+    </div>
+    <button type="button" onclick="checked()" class="btn btn-primary">Lưu Truyện</button>
+  </form>
+</div>
+
+
+<script>
+
+  function HienThiTheLoai() {
+
+    var theloai = document.forms[0];
+    var tacgia = document.getElementById("tacgias").value;
+    var txt = "";
+    var i;
+    for (i = 0; i < theloai.length; i++) {
+      if (theloai[i].checked) {
+        txt = txt + theloai[i].value + ",";
+      }
+    }
+    txt = txt.replace(tacgia, "");
+    document.getElementById("theloais").value = "" + txt;
+  }
+
+  function HienThiTacGia() {
+    var tacgia = document.forms[0];
+    var theloai = document.getElementById("theloais").value;
+    var txt2 = "";
+    var i;
+    for (i = 0; i < tacgia.length; i++) {
+      if (tacgia[i].checked) {
+        txt2 = txt2 + tacgia[i].value + ",";
+      }
+    }
+    txt2 = txt2.replace(theloai, "");
+    document.getElementById("tacgias").value = "" + txt2;
+  }
+
+
+  function checked() {
+    const form = document.forms[0];
+    const tenTruyen = document.getElementById('tenTruyen').value;
+    const tenTheLoai = document.getElementById('theloais').value;
+    const tenTacGia = document.getElementById('tacgias').value;
+    const gioiThieu = document.getElementById('gioiThieu').value;
+    const anhBia = document.getElementById('anhBia').value;
+
+    if (tenTruyen == "") {
+      alert("Vui lòng nhập tên truyện");
+      return;
+    }
+    else if (tenTheLoai == "") {
+      alert("Vui lòng chọn ít nhất 1 thể loại");
+      return;
+    }
+    else if (tenTacGia == "") {
+      alert("Vui lòng chọn ít nhất 1 tác giả ");
+      return;
+    }
+    else if (gioiThieu == "") {
+      alert("Vui lòng nhập giới thiệu");
+      return;
+    }
+    else if (anhBia == "") {
+      alert("Vui lòng nhập link ảnh bìa");
+      return;
+    } else {
+      form.submit();
+    }
+  }
+</script>

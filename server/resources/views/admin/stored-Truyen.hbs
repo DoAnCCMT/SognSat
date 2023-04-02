@@ -1,0 +1,157 @@
+<div class="mt-4">
+  <h3>Danh Sách Truyện</h3>
+  <a href="/truyenAdmin/create">Thêm Truyện</a>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên truyện</th>
+        <th scope="col" style="width: 140px;">Thể loại</th>
+        <th scope="col" style="width: 140px;">Tác Giả</th>
+        <th scope="col">Giới Thiệu</th>
+        <th scope="col">Ngày Tạo</th>
+        <th scope="col">Ngày Cập Nhật</th>
+        <th scope="col">Lượt xem</th>
+        <th scope="col">Lượt Thích</th>
+        <th scope="col">Tình trạng</th>
+        <th scope="col" colspan="2">Trạng thái</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each truyen}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{this.TenTruyen}}</td>
+        <td>
+          {{#each this.TheLoais}}
+          <li>{{this}}</li>
+          {{/each}}
+        </td>
+        <td>
+          {{#each this.TacGias}}
+          <li>{{this}}</li>
+          {{/each}}
+        </td>
+        <td>
+          <p class="card-text" style="overflow: hidden;
+                text-overflow: ellipsis;
+                -webkit-line-clamp: 3;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;">
+            {{this.GioiThieu}}
+          </p>
+        </td>
+        <td>{{this.NgayTao}}</td>
+        <td>{{this.NgayCapNhat}}</td>
+        <td>{{this.LuotXem}}/{{this.LuotXemThang}}</td>
+        <td>{{this.LuotThich}}</td>
+        <td>{{this.TinhTrang}}</td>
+        <td>{{this.TrangThai}}</td>
+        <td>
+          <a href="/truyenAdmin/{{this._id}}/edit" class="btn btn-link">Sửa</a> <br>
+          <a href="/chapterAdmin/stored/{{this._id}}" class="btn btn-link">Chapter</a><br>
+          <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}"
+            data-target="#on-off-trangthai">Ẩn/Hiện</a><br>
+          <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}"
+            data-target="#on-off-tinhtrang">Hoàn Thành</a><br>
+        </td>
+
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{! xac nhan ẩn hoặc hiện }}
+<div id="on-off-trangthai" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thay đổi trạng thái của truyện</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn thay đổi trạng thái của truyện này ? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnXacNhan" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- xac nhan hoàn thành truyện --}}
+<div id="on-off-tinhtrang" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thay đổi tình trạng của truyện</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chắc chắn thay đổi tình trạng của truyện này ? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnXacNhanTinhTrang" class="btn btn-danger">Xác nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{!-- form thay doi trang thai --}}
+<form name="on-off-trangthai-form" method="POST">
+
+
+  {{!-- form thay doi tinh trang --}}
+
+  <script>
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var truyenID;
+      var xacnhanForm = document.forms['on-off-trangthai-form'];
+      var btnXanNhan =
+        document.getElementById('btnXacNhan')
+      $('#on-off-trangthai').on('show.bs.modal', function (event) {
+        var button =
+          $(event.relatedTarget); truyenID = button.data('id');
+
+      });; btnXanNhan.onclick = function () {
+        console.log("click " + xacnhanForm);
+        xacnhanForm.action = '/truyenAdmin/trangthai/' + truyenID + '?_method=PUT';
+        xacnhanForm.submit()
+      }
+    });
+
+
+  </script>
+</form>
+<form name="on-off-tinhtrang-form" method="POST">
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var truyenID;
+      var xacnhanForm = document.forms['on-off-tinhtrang-form'];
+      var btnXanNhan =
+        document.getElementById('btnXacNhanTinhTrang')
+      $('#on-off-tinhtrang').on('show.bs.modal', function (event) {
+        var button =
+          $(event.relatedTarget); truyenID = button.data('id');
+        console.log("click " + xacnhanForm);
+      });; btnXanNhan.onclick = function () {
+        xacnhanForm.action = '/truyenAdmin/tinhtrang/' + truyenID + '?_method=PUT';
+        xacnhanForm.submit()
+      }
+    });
+
+  </script>
+</form>

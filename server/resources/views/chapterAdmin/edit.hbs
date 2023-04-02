@@ -1,0 +1,43 @@
+<style type="text/css">
+  input[name=Truyen] {
+    pointer-events: none;
+  }
+</style>
+
+<div class="mt-4">
+  <h3>Cập nhật Chapter</h3>
+
+  <form class="mt-4" method="POST" action="/chapterAdmin/{{chapter._id}}?_method=PUT">
+    <div class="form-group">
+      <label for="TenChapTer">Tên chapter</label>
+      <input type="Text" name="TenChapter" class="form-control" id="tenChapter" aria-describedby="emailHelp"
+        placeholder="Nhập tên tác giả..." value="{{chapter.TenChapter}}" />
+      <label for="Truyen">Thêm vào truyện</label>
+      <input type="Text" name="Truyen" class="form-control" aria-describedby="emailHelp" placeholder="Nhập tên chapter"
+        value="{{chapter.Truyen}}" />
+      <label for="LinkAnhs">Link ảnh</label>
+      <textarea name="LinkAnhs" class="form-control" id="linkAnhs" aria-describedby="emailHelp"
+        placeholder="Nhập tên tác giả...">{{chapter.LinkAnhs}}</textarea>
+    </div>
+    <button type="button" onclick="checked()" class="btn btn-primary">Lưu</button>
+  </form>
+</div>
+
+<script>
+  function checked() {
+    const form = document.forms[0];
+    const tenChapter = document.getElementById('tenChapter').value;
+    const linkAnhs = document.getElementById('linkAnhs').value;
+
+    if (tenChapter == "") {
+      alert("Vui lòng nhập tên chapter");
+      return;
+    } else if (linkAnhs == "") {
+      alert("Vui lòng nhập link ảnh");
+      return;
+    } else {
+      form.submit();
+    }
+
+  }
+</script>
